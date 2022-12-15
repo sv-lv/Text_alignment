@@ -9,21 +9,12 @@
 
 Если вы можете уместить только одно слово в строке, вы должны заполнить правую часть пробелами.
 Гарантируется, что каждое слово не длиннее k. Например, учитывая список слов
-["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"] и k = 16,
+the quick brown fox jumps over the lazy dog и k = 16,
 вы должны вернуть следующее: [“the  quick brown”, “fox  jumps  over”, “the   lazy   dog”]'''
 '''the quick brown fox jumps over the lazy dog'''
-
-def input_k():
-    k = 16
-    '''int(input('Длина строки: '))'''
-    return k
-
-def input_str():
-    string = 'the quick brown fox jumps over the lazy dog'
-    '''input('Введите список слов: ')'''
-    return string
-
-
+from text_alignment.input_k import input_k
+from text_alignment.input_str import input_str
+from text_alignment.first import first
 
 def concat():
     k = input_k()
@@ -32,20 +23,16 @@ def concat():
     new_list = []
     len_result = 0
     x = 0
-    result = []
+    result = [] #итоговый список с выровненными строками
     for i in range(1, 1 + len(string)):
+        '''условие для первой итерации (строчки)'''
         if i == k:
-            new_list = string[:i]
-            if string[i] != ' ':  # не учтен вариант, когда string[i] равен последней букве в слове
-                new_list_changed = new_list[:new_list.rfind(' ')]
-                result.append(new_list_changed)
-                len_result = len(new_list_changed)
-            if string[i] == ' ':
-                new_list_changed = new_list[:i - 1]
-                result.append(new_list_changed)
-                len_result = len(new_list_changed)
+            new_list_changed = first()
+            result.append(new_list_changed)
+            len_result = len(new_list_changed)
 
         lr = len_result + x
+        '''условие для следующих после первой итераций (строчек)'''
         if i == lr + k:
             len_result += x
             new_list = string[len_result:len_result + k]
@@ -63,6 +50,8 @@ def concat():
             new_list = string[lr:len(string)]
             result.append(new_list)
 
-    print(result)
+    return result
 
-concat()
+
+
+
